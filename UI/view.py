@@ -24,19 +24,42 @@ class View(ft.UserControl):
         self._page.controls.append(self._title)
 
 
-        self._ddGenre = ft.Dropdown(label="Genere", width=250)
-        self._controller.fillDDGenre()
+        self._ddCountry = ft.Dropdown(label="Country", width=250)
+        self._controller.fillDDCountry()
+        self._dp1 = ft.DatePicker(
+            on_change=lambda e: print(f"Giorno selezionato: {self._dp1.value}"),
+            on_dismiss=lambda e: print("Data non selezionata")
+        )
+
+        self._page.overlay.append(self._dp1)
+        self._btnCal1 = ft.ElevatedButton("Start date",
+                                          icon=ft.icons.CALENDAR_MONTH,
+                                          on_click=lambda _: self._dp1.pick_date())
+
+        self._dp2 = ft.DatePicker(
+            on_change=lambda e: print(f"Giorno selezionato: {self._dp2.value}"),
+            on_dismiss=lambda e: print("Data non selezionata")
+        )
+        self._page.overlay.append(self._dp2)
+        self._btnCal2 = ft.ElevatedButton("End date",
+                                          icon=ft.icons.CALENDAR_MONTH,
+                                          on_click=lambda _: self._dp2.pick_date())
+
+        self._controller.setDates()
         self._btnCreaGrafo = ft.ElevatedButton(text="Crea Grafo",
                                                on_click=self._controller.handleCreaGrafo, width=250)
 
-        row1 = ft.Row([self._ddGenre, self._btnCreaGrafo],
+        row1 = ft.Row([self._ddCountry, self._btnCal1, self._btnCal2, self._btnCreaGrafo],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+        self._txtLun = ft.TextField(label="Peso minimo", width=120)
+        self._ddCustomerStart = ft.Dropdown(label="Start track", width=250)
+        self._ddCustomerEnd = ft.Dropdown(label="End track", width=250)
 
-        self._ddArtist = ft.Dropdown(label="Artist", width=250)
-        self._btnCreaGrafo = ft.ElevatedButton(text="Trova Cammino", on_click=self._controller.handleCammino, width=250)
+        self._btnCercaCammino = ft.ElevatedButton(text="Cerca ",
+                                                  on_click=self._controller.handleCercaCammino, width=120)
 
-        row2 = ft.Row([self._ddArtist, self._btnCreaGrafo],
+        row2 = ft.Row([self._txtLun, self._ddCustomerStart, self._ddCustomerEnd, self._btnCercaCammino],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row2)
 
